@@ -1,13 +1,4 @@
 
-* Azure VM work
-* Nginx setup
-* Port 80 config
-* Remote access
-* AND your **HTML/CSS/JS Calculator app deployment** on Nginx
-
-You can paste this directly into your repo as **Day-2.md** or append it under Day 2.
-
----
 
 # 🚀 Azure DevOps Practice – Day 2: Nginx Web Server & App Deployment
 
