@@ -1,5 +1,18 @@
+This is awesome progress, Pranav 💪 — Day 2 now includes **cloud + Linux + Nginx + real app deployment**. That’s *proper* DevOps practice.
 
-# 🚀 Azure DevOps Practice – Day 2: Nginx Web Server Deployment & Remote Access
+Below is a **clean, professional, GitHub-ready Day 2 update** that includes:
+
+* Azure VM work
+* Nginx setup
+* Port 80 config
+* Remote access
+* AND your **HTML/CSS/JS Calculator app deployment** on Nginx
+
+You can paste this directly into your repo as **Day-2.md** or append it under Day 2.
+
+---
+
+# 🚀 Azure DevOps Practice – Day 2: Nginx Web Server & App Deployment
 
 ## 📌 Overview
 
@@ -7,12 +20,13 @@ This day focuses on:
 
 * Using **Azure CLI from Windows CMD**
 * Creating and managing Azure VM resources
+* Connecting to Ubuntu VM using **SSH (Windows & Mobile)**
 * Updating and upgrading Ubuntu server packages
 * Installing and configuring **Nginx web server**
 * Opening **Port 80** using Azure CLI (NSG rule)
 * Verifying web server from browser
-* Editing the default Nginx web page
-* Accessing the VM using **mobile SSH client**
+* Deploying a **Simple Calculator Web App (HTML, CSS, JS)** on Nginx
+* Editing live server files and testing from browser
 
 ---
 
@@ -28,9 +42,9 @@ Successfully authenticated and selected the subscription.
 
 ---
 
-### 2️⃣ Created / Used VM in Existing Resource Group
+### 2️⃣ Used Existing Resource Group & VM
 
-Used the existing resource group:
+Checked resource groups:
 
 ```bash
 az group list -o table
@@ -56,7 +70,7 @@ az vm create \
 ssh pranav@<PUBLIC_IP>
 ```
 
-Login successful to Ubuntu 22.04 server.
+Login successful to **Ubuntu 22.04** server.
 
 ---
 
@@ -92,7 +106,7 @@ sudo systemctl status nginx
 az vm open-port --resource-group devops-practice --name UbuntuVm --port 80
 ```
 
-This updated the Network Security Group (NSG) to allow HTTP traffic.
+This updated the **Network Security Group (NSG)** to allow HTTP traffic.
 
 ---
 
@@ -116,61 +130,187 @@ This confirmed:
 
 ---
 
-### 8️⃣ Updated Nginx Default Web Page
+### 8️⃣ Deployed Simple Calculator Web App on Nginx
 
-Edited the default file:
+Navigated to web root:
 
 ```bash
-sudo nano /var/www/html/index.html
+cd /var/www/html
+mkdir calculator
 ```
 
-Replaced content with custom message, for example:
+Created files in /var/www/html/calculator:
+
+* `index.html`
+* `styles.css`
+* `script.js`
+
+#### 📄 index.html
 
 ```html
-<h1>Deployed by Pranav 🚀</h1>
-<p>Day 2: Azure VM + Nginx सफल!</p>
-```
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Simple Calculator</title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <div class="calculator">
+            <h2>Simple Calculator</h2>
+            <input type="text" id="result" readonly>
 
-Saved and refreshed browser → Custom page displayed ✅
+            <div class="buttons">
+                <button onclick="clearResult()">C</button>
+                <button onclick="appendValue('7')">7</button>
+                <button onclick="appendValue('8')">8</button>
+                <button onclick="appendValue('9')">9</button>
+                <button onclick="appendValue('/')">/</button>
+
+                <button onclick="appendValue('4')">4</button>
+                <button onclick="appendValue('5')">5</button>
+                <button onclick="appendValue('6')">6</button>
+                <button onclick="appendValue('*')">*</button>
+
+                <button onclick="appendValue('1')">1</button>
+                <button onclick="appendValue('2')">2</button>
+                <button onclick="appendValue('3')">3</button>
+                <button onclick="appendValue('-')">-</button>
+
+                <button onclick="appendValue('0')">0</button>
+                <button onclick="calculate()">=</button>
+                <button onclick="appendValue('+')">+</button>
+            </div>
+        </div>
+        <script src="script.js"></script>
+    </body>
+</html>
+```
 
 ---
 
-### 9️⃣ Accessed VM Using Mobile SSH Client
+#### 📄 script.js
 
-* Used a mobile SSH client app
-* Connected to the same VM using:
+```javascript
+function appendValue(value){
+    document.getElementById("result").value += value;
+}
+
+function clearResult(){
+    document.getElementById("result").value = "";
+}
+
+function calculate() {
+    try {
+        let res = eval(document.getElementById("result").value);
+        document.getElementById("result").value = res;
+    } catch (e) {
+        alert("Invalid Expression");
+    }
+}
+```
+
+---
+
+#### 📄 styles.css
+
+```css
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f2f2f2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.calculator {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px gray;
+    text-align: center;
+    width: 260px;
+}
+
+#result {
+    width: 100%;
+    height: 50px;
+    margin-bottom: 10px;
+    font-size: 20px;
+    text-align: right;
+    padding-right: 10px;
+    box-sizing: border-box;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+button {
+    height: 45px;
+    font-size: 18px;
+    cursor: pointer;
+}
+```
+
+---
+
+### 9️⃣ Tested from Browser
+
+Opened:
+
+```
+http://<PUBLIC_IP>/calculator
+```
+
+Result:
+
+> ✅ Simple Calculator loaded and working on Azure VM via Nginx
+
+This confirmed:
+
+* Static site hosting works
+* Nginx is serving real application files
+* Cloud VM → Web Server → Browser pipeline is working
+
+---
+
+### 🔟 Accessed VM Using Mobile SSH Client
+
+* Used mobile SSH app
+* Connected using:
 
   * Public IP
   * Username: `pranav`
-  * SSH key / password
-* Successfully logged in and verified server access
+  * ssh key
+* Successfully logged in and verified files and Nginx status
 
-This proved:
-
-> ✅ VM is accessible from anywhere securely via SSH
-
----
-
-## 🧹 Cleanup (Cost Saving Step)
-
-After practice, deleted resources:
-
-```bash
-az group delete --name devops-practice --yes --no-wait
-```
-
-This avoids unnecessary Azure charges.
+> ✅ VM accessible securely from anywhere
 
 ---
 
 ## ✅ Day 2 Achievements
 
 * ✔️ Used Azure CLI from Windows CMD
-* ✔️ Deployed and configured Nginx on Ubuntu VM
-* ✔️ Opened HTTP port using Azure CLI
-* ✔️ Accessed web server from browser
-* ✔️ Modified live server web page
-* ✔️ Connected to VM from mobile via SSH
-* ✔️ Practiced real cloud + real server + real networking
+* ✔️ Managed real Azure VM
+* ✔️ Installed and configured Nginx
+* ✔️ Opened HTTP port using Azure NSG
+* ✔️ Deployed a real HTML/CSS/JS web app
+* ✔️ Served app via public IP
+* ✔️ Accessed VM from laptop and mobile via SSH
+* ✔️ Practiced real cloud + Linux + web hosting
 * ✔️ Cleaned up resources to save cost
 
+---
+
+## 🎯 What I Learned
+
+* How to host a static website on a cloud VM
+* How Nginx serves web content from `/var/www/html`
+* How cloud networking (ports, NSG, public IP) works
+* How to deploy and test real apps on a server
+* How DevOps connects **code + server + cloud**
+
+---
