@@ -1,6 +1,3 @@
-This is awesome progress, Pranav 💪 — Day 2 now includes **cloud + Linux + Nginx + real app deployment**. That’s *proper* DevOps practice.
-
-Below is a **clean, professional, GitHub-ready Day 2 update** that includes:
 
 * Azure VM work
 * Nginx setup
