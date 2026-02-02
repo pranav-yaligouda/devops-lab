@@ -57,7 +57,7 @@ User Browser
 ## 📂 Project Structure
 
 ```
-taskapp/
+taskmanager/
  ├── TaskServer.java
  ├── TaskServer.class
  ├── index.html
@@ -70,8 +70,7 @@ taskapp/
 
 Simple Java HTTP server using `ServerSocket` that listens on port `8080` and handles POST requests.
 
-```java
-import java.io.*;
+```import java.io.*;
 import java.net.*;
 
 public class TaskServer {
