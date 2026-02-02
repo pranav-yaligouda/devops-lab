@@ -130,8 +130,7 @@ public class TaskServer {
 
 ## 🌐 Frontend: index.html
 
-```html
-<!DOCTYPE html>
+```<!DOCTYPE html>
 <html>
 <head>
     <title>Simple Task Manager</title>
@@ -212,17 +211,17 @@ az group create --name devops-practice --location centralindia
 
 ```bash
 az vm create \
-  --resource-group devops-practice \
-  --name DevOpsVM \
+  --resource-group devops-lab \
+  --name ununtuvm \
   --image Ubuntu2204 \
   --admin-username pranav \
-  --generate-ssh-keys
+  --generate-ssh-key
 ```
 
 4. Open Port 80:
 
 ```bash
-az vm open-port --resource-group devops-practice --name DevOpsVM --port 80
+az vm open-port --resource-group devops-lan --name ubuntuvm --port 80
 ```
 
 ---
