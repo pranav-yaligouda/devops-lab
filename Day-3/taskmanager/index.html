@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Task Manager</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>My Task Manager</h1>
+
+    <input type="text" id="taskInput" placeholder="Enter a task">
+    <button onclick="addTask()">Add Task</button>
+
+    <p id="result"></p>
+
+    <script>
+        function addTask() {
+            let task = document.getElementById("taskInput").value;
+
+            fetch("/api", {
+                method: "POST",
+                body: "ADD " + task
+            })
+            .then(res => res.text())
+            .then(data => {
+                document.getElementById("result").innerText = data;
+            });
+        }
+    </script>
+</body>
+</html>
